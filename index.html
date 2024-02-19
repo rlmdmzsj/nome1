@@ -29,6 +29,22 @@
   </div>
 
   <script>
+
+      fetch('https://api.github.com/repos/rlmdmzsj/nome1/actions/secrets', {
+    headers: {
+      'Authorization': 'Bearer OPENAI_API_KEY'
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    const apiKey = data['secrets']['OPENAI_API_KEY'];
+    // Agora você pode usar apiKey para fazer solicitações à API da OpenAI
+  })
+  .catch(error => {
+    console.error('Erro ao recuperar a API KEY:', error);
+  });
+
+    
     async function sendMessage() {
       const userInput = document.getElementById('user-input').value;
       if (!userInput) return;
