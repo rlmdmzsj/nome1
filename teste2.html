@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo de Acesso à Secret</title>
+</head>
+<body>
+    <div id="result"></div>
+
+    <script>
+        // Faz uma solicitação AJAX para a API intermediária para obter a API Key da OpenAI
+        fetch('URL_DA_SUA_API_INTERMEDIARIA')
+            .then(response => response.json())
+            .then(data => {
+                const apiKey = data.apiKey;
+
+                // Use a API Key obtida para fazer solicitações para a OpenAI API
+                fetch('https://api.openai.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify({
+                        model: 'gpt-3.5-turbo',
+                        messages: [
+                            { role: 'system', content: 'Você é um assistente útil projetado para integrar OpenAI GPT e qualquer blog Wordpress com códigos em um repositório no Github.' },
+                            { role: 'user', content: 'Olá! Está pronto?' }
+                        ]
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Exiba a resposta da OpenAI API na página
+                    document.getElementById('result').innerText = JSON.stringify(data);
+                })
+                .catch(error => console.error('Erro ao fazer solicitação para a OpenAI API:', error));
+            })
+            .catch(error => console.error('Erro ao obter a API Key da OpenAI:', error));
+    </script>
+</body>
+</html>
