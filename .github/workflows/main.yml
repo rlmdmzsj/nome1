@@ -1,0 +1,19 @@
+name: Primeira mensagem OpenAI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  exemplo_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mensagem OpenAI
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          curl -H "Authorization: Bearer $OPENAI_API_KEY" \
+               -H 'Content-Type: application/json' \
+               https://api.openai.com/v1/chat/completions \
+               -d '{"messages":[{"role":"system","content":"Você é um assistente útil projetado para integrar OpenAI GPT e qualquer um blog Wordpress com códigos em um repositório no Github."},{"role":"user","content":"Olá! Está pronto?"}]}'
